@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MajorActivity">
+
+    <include
+        layout="@layout/layout_header"
+        android:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/fafafa" />
+    <!--    属性一: iteamBackground 指定的是底部导航栏的背景颜色,默认是主题的颜色;-->
+    <!--    属性二: iteamIconTint 指的是导航栏中图片的颜色-->
+    <!--    属性三: iteamTextColor 指的是导航栏文字的颜色-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/fafafa" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/fafafa"
+        app:menu="@menu/menu_bottom_navigation" />
+</LinearLayout>
