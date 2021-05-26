@@ -64,4 +64,8 @@ dependencies {
      *LottieAnimationView动画
      */
     implementation 'com.airbnb.android:lottie:2.8.0'
+    /**
+     * 指示器配合viewPager
+     */
+    implementation 'com.github.hackware1993:MagicIndicator:1.7.0' // for androidx
 }

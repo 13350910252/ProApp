@@ -21,6 +21,9 @@ import com.yinp.proapp.fragment.StudyFragment;
 import com.yinp.proapp.fragment.ToolsFragment;
 import com.yinp.proapp.utils.StatusBarUtil;
 
+/**
+ * 首页
+ */
 public class MajorActivity extends AppBaseFragmentActivity<ActivityMajorBinding> {
     Fragment curFragment;
     FragmentManager fragmentManager;
@@ -40,24 +43,27 @@ public class MajorActivity extends AppBaseFragmentActivity<ActivityMajorBinding>
 
     @Override
     protected void initViews() {
+        bd.header.headerBackImg.setVisibility(View.GONE);
+        bd.header.headerCenterTitle.setText("首页");
+        bd.bottomNavigationView.setSelectedItemId(R.id.one);
         bd.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.one:
-
+                        chooseFragment(0);
                         break;
                     case R.id.two:
-
+                        chooseFragment(1);
                         break;
                     case R.id.three:
-
+                        chooseFragment(2);
                         break;
                     case R.id.four:
-
+                        chooseFragment(3);
                         break;
                     case R.id.five:
-
+                        chooseFragment(4);
                         break;
                 }
                 return true;

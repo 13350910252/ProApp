@@ -8,6 +8,7 @@
     tools:context=".activity.MajorActivity">
 
     <include
+        android:id="@+id/header"
         layout="@layout/layout_header"
         android:visibility="visible" />
 
