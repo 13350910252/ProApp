@@ -1,3 +1,4 @@
+include ':showview'
 include ':tools'
 include ':app'
 rootProject.name = "ProApp"

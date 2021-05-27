@@ -11,10 +11,15 @@ public interface ApiRetrofit {
     @POST("user/login")
     Observable<BaseRetrofitData> accountLogin(@Field("username") String username, @Field("password") String password);
 
+    /**
+     * 获取顶部banner
+     *
+     * @return
+     */
     @GET("banner/json")
     Observable<BaseRetrofitData> getBannerList();
 
-//    https://www.wanandroid.com/article/list/0/json
+    //    https://www.wanandroid.com/article/list/0/json
     @GET("article/list/0/json")
     Observable<BaseRetrofitData> homArticleList();
 }

@@ -14,7 +14,6 @@ import io.reactivex.observers.DisposableObserver;
 import retrofit2.HttpException;
 
 public abstract class BaseObserver<T> extends DisposableObserver<T> {
-//    protected CBaseView view;
     /**
      * 解析数据失败
      */
@@ -32,17 +31,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
      */
     public static final int CONNECT_TIMEOUT = 1004;
 
-//    public BaseObserver(CBaseView view) {
-//        this.view = view;
-//    }
-
-    @Override
-    protected void onStart() {
-//        if (view != null) {
-//            view.showLoading();
-//        }
-    }
-
     @Override
     public void onNext(@NotNull T o) {
         try {
@@ -50,9 +38,7 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
             if (model.getErrorCode() == 0) {
                 onSuccess(o);
             } else {
-//                if (view != null) {
-//                    view.onErrorCode(model);
-//                }
+                onCodeFail("");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,9 +49,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onError(@NotNull Throwable e) {
-//        if (view != null) {
-//            view.hideLoading();
-//        }
         if (e instanceof HttpException) {
             //   HTTP错误
             onException(BAD_NETWORK);
@@ -116,12 +99,11 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onComplete() {
-//        if (view != null) {
-//            view.hideLoading();
-//        }
-
     }
+
     public abstract void onSuccess(T o);
 
     public abstract void onError(String msg);
+
+    public abstract void onCodeFail(String msg);
 }

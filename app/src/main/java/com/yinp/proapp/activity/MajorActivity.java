@@ -45,7 +45,6 @@ public class MajorActivity extends AppBaseFragmentActivity<ActivityMajorBinding>
     protected void initViews() {
         bd.header.headerBackImg.setVisibility(View.GONE);
         bd.header.headerCenterTitle.setText("首页");
-        bd.bottomNavigationView.setSelectedItemId(R.id.one);
         bd.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -75,6 +74,7 @@ public class MajorActivity extends AppBaseFragmentActivity<ActivityMajorBinding>
         bd.bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
 
         fragmentManager = getSupportFragmentManager();
+        chooseFragment(0);
     }
 
     private void chooseFragment(int position) {

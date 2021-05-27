@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 
 import com.yinp.proapp.utils.StatusBarUtil;
+import com.yinp.tools.utils.LoadUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -94,5 +95,26 @@ public abstract class AppBaseFragment<T extends ViewBinding> extends BaseFragmen
         } else {
             startActivityForResult(intent, requestCode);
         }
+    }
+
+    /**
+     * 显示加载框
+     */
+    public void showLoading(int message) {
+        LoadUtils.getInstance().builder(getContext(), getString(message));
+    }
+
+    /**
+     * 显示加载框
+     */
+    public void showLoading(String message) {
+        LoadUtils.getInstance().builder(getContext(), message);
+    }
+
+    /**
+     * 隐藏加载框
+     */
+    public void hideLoading() {
+        LoadUtils.getInstance().close();
     }
 }

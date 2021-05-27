@@ -17,39 +17,36 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class BuildRetrofit {
-    public static final String BASE_WAN_ANDROID_URL = "https://www.wanandroid.com";
+    public static final String BASE_URL = "https://www.wanandroid.com";
 
     private static BuildRetrofit buildRetrofit;
     private Retrofit retrofit;
     private OkHttpClient client;
     private ApiRetrofit apiRetrofit;
 
-    private String TAG = "BuildRetrofit";
+    private String TAG = "------";
 
     /**
      * 请求访问quest
      * response拦截器
      */
-    private Interceptor interceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            long startTime = System.currentTimeMillis();
-            Response response = chain.proceed(chain.request());
-            long endTime = System.currentTimeMillis();
-            long duration = endTime - startTime;
-            MediaType mediaType = response.body().contentType();
-            String content = response.body().string();
-            Log.e(TAG, "----------Request Start----------------");
-            Log.e(TAG, "| " + request.toString() + request.headers().toString());
-            Log.e(TAG, "| Response:" + content);
-            Log.e(TAG, "----------Request End:" + duration + "毫秒----------");
-            return response.newBuilder()
+    private Interceptor interceptor = chain -> {
+        Request request = chain.request();
+        long startTime = System.currentTimeMillis();
+        Response response = chain.proceed(chain.request());
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        MediaType mediaType = response.body().contentType();
+        String content = response.body().string();
+        Log.d(TAG, "----------Request Start----------------");
+        Log.d(TAG, "| " + request.toString() + request.headers().toString());
+        Log.d(TAG, "| Response:" + content);
+        Log.d(TAG, "----------Request End:" + duration + "毫秒----------");
+        return response.newBuilder()
 //                    .addHeader()
 //                    .removeHeader()
-                    .body(ResponseBody.create(mediaType, content))
-                    .build();
-        }
+                .body(ResponseBody.create(mediaType, content))
+                .build();
     };
 
     public BuildRetrofit(String baseUrl) {
