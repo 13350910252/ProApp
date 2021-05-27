@@ -10,6 +10,7 @@ import com.yinp.proapp.base.fragment.PresenterBaseFragment;
 import com.yinp.proapp.bean.BannerEntity;
 import com.yinp.proapp.databinding.FragmentHomeBinding;
 import com.yinp.proapp.manger.HomeFragmentManager;
+import com.yinp.proapp.utils.JumpWebUtils;
 import com.yinp.proapp.web.retrofit.BaseObserver;
 import com.yinp.proapp.web.retrofit.BaseRetrofitData;
 import com.youth.banner.indicator.CircleIndicator;
@@ -33,7 +34,7 @@ public class HomeFragment extends PresenterBaseFragment<FragmentHomeBinding, Hom
         bannerAdapter = new HomeBannerAdapter(listBanner, getContext());
         bd.topBanner.setAdapter(bannerAdapter).addBannerLifecycleObserver(this).setIndicator(new CircleIndicator(getContext()));
         bd.topBanner.setOnBannerListener((OnBannerListener<BannerEntity>) (data, position) -> {
-
+            JumpWebUtils.startWebView(getContext(), data.getTitle(), data.getUrl());
         });
     }
 

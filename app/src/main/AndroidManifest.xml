@@ -17,11 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".web.webview.WebViewActivity"></activity>
         <activity
             android:name=".activity.MajorActivity"
             android:exported="false"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" /><!-- 首页 -->
+            android:screenOrientation="portrait" /> <!-- 首页 -->
         <activity
             android:name=".activity.LoginActivity"
             android:exported="false"
