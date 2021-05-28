@@ -18,6 +18,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class BuildRetrofit {
     public static final String BASE_URL = "https://www.wanandroid.com";
+    public static final String Wandroid_URL = "https://www.wanandroid.com";
 
     private static BuildRetrofit buildRetrofit;
     private Retrofit retrofit;

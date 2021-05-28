@@ -12,6 +12,7 @@
         app:elevation="@dimen/_0dp">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll">
@@ -23,20 +24,28 @@
                 android:layout_marginStart="@dimen/_14dp"
                 android:layout_marginTop="@dimen/_10dp"
                 android:layout_marginEnd="@dimen/_14dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20dp"/>
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/material_indicator"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40dp" />
+            android:layout_height="@dimen/_48dp"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:paddingTop="@dimen/_8dp"
+            android:paddingBottom="@dimen/_4dp" />
 
         <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/material_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

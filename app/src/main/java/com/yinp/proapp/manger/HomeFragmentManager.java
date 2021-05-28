@@ -19,6 +19,6 @@ public class HomeFragmentManager extends BaseManager {
      */
     public void getBannerList(BaseObserver<BaseRetrofitData> baseObserver) {
         addDisposable(BuildRetrofit.getInstance(BuildRetrofit.BASE_URL)
-                .getApiRetrofit().getBannerList(), baseObserver);
+                .getApiRetrofit().getWanBannerList(), baseObserver);
     }
 }

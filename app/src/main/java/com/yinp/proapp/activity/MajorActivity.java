@@ -14,11 +14,11 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.yinp.proapp.R;
 import com.yinp.proapp.base.activity.AppBaseFragmentActivity;
 import com.yinp.proapp.databinding.ActivityMajorBinding;
-import com.yinp.proapp.fragment.HomeFragment;
-import com.yinp.proapp.fragment.MeFragment;
-import com.yinp.proapp.fragment.RecreationFragment;
-import com.yinp.proapp.fragment.StudyFragment;
-import com.yinp.proapp.fragment.ToolsFragment;
+import com.yinp.proapp.fragment.bottompage.HomeFragment;
+import com.yinp.proapp.fragment.bottompage.MeFragment;
+import com.yinp.proapp.fragment.bottompage.RecreationFragment;
+import com.yinp.proapp.fragment.bottompage.StudyFragment;
+import com.yinp.proapp.fragment.bottompage.ToolsFragment;
 import com.yinp.proapp.utils.StatusBarUtil;
 
 /**

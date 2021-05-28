@@ -17,7 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".web.webview.WebViewActivity"></activity>
+        <activity
+            android:name=".module.wanandroid.activity.WandroidActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /><!-- 玩Android首页 -->
+        <activity
+            android:name=".activity.AddUndeterminedActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /><!--添加今日待做任务 -->
+        <activity
+            android:name=".web.webview.WebViewActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" /><!-- 统一的webview -->
         <activity
             android:name=".activity.MajorActivity"
             android:exported="false"

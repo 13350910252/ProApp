@@ -1,4 +1,4 @@
-package com.yinp.proapp.fragment;
+package com.yinp.proapp.fragment.bottompage;
 
 import android.view.View;
 

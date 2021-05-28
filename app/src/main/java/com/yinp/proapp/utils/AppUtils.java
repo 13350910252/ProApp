@@ -1,6 +1,7 @@
 package com.yinp.proapp.utils;
 
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,5 +38,9 @@ public class AppUtils {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
         window.setAttributes(lp);
+    }
+
+    public static String setText(String value) {
+        return TextUtils.isEmpty(value) ? "" : value;
     }
 }

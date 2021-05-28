@@ -29,7 +29,7 @@ public class SplashActivity extends AppBaseActivity<ActivitySplashBinding> {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                goToActivity(LoginActivity.class);
+                goToActivity(MajorActivity.class);
                 finish();
             }
 

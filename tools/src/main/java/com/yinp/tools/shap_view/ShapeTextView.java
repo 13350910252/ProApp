@@ -167,7 +167,7 @@ public class ShapeTextView extends AppCompatTextView {
                     setMBackGround(setBg(((ColorDrawable) oneD).getColor()));
                 }
             }
-        } else if (oneD != null) {//在一种颜色的情况下，自动设置75%不透明度的颜色
+        } else if (oneD != null) {//在一种颜色的情况下，自动设置70%不透明度的颜色
             if (oneD instanceof BitmapDrawable) {
                 setMBackGround(setBg((BitmapDrawable) oneD));
             } else if (oneD instanceof GradientDrawable) {
@@ -196,7 +196,7 @@ public class ShapeTextView extends AppCompatTextView {
                 }
             }
         } else {
-            setBackgroundColor(Color.RED);
+            setBackgroundColor(Color.WHITE);
         }
     }
 
@@ -375,14 +375,23 @@ public class ShapeTextView extends AppCompatTextView {
     }
 
     /**
-     * 默认改变75%的透明度
+     * 默认改变70%的透明度
+     * 透明的颜色没有用
      *
      * @param color
      * @return
      */
     private String getHexString(int color) {
+        if (color == 0 || color == -1) {
+            return "#e6e6e6";
+        }
+        int oldColor = (color & 0xff000000) | (color & 0x00ff0000) | (color & 0x0000ff00) | (color & 0x000000ff);
+        String oldC = Integer.toHexString(oldColor);
+        if (oldC.startsWith("00") || oldC.equals("ffffffff")) {
+            return "#e6e6e6";
+        }
         String s = "#";
-        int colorStr = (color & 0xbf000000) | (color & 0x00ff0000) | (color & 0x0000ff00) | (color & 0x000000ff);
+        int colorStr = (color & 0xb3000000) | (color & 0x00ff0000) | (color & 0x0000ff00) | (color & 0x000000ff);
         s = s + Integer.toHexString(colorStr);
         return s;
     }

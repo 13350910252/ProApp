@@ -5,6 +5,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiRetrofit {
     @FormUrlEncoded
@@ -17,9 +18,9 @@ public interface ApiRetrofit {
      * @return
      */
     @GET("banner/json")
-    Observable<BaseRetrofitData> getBannerList();
+    Observable<BaseRetrofitData> getWanBannerList();
 
     //    https://www.wanandroid.com/article/list/0/json
-    @GET("article/list/0/json")
-    Observable<BaseRetrofitData> homArticleList();
+    @GET("article/list/{size}/json")
+    Observable<BaseRetrofitData> getWanHomArticleList(@Path("size") int size);
 }
