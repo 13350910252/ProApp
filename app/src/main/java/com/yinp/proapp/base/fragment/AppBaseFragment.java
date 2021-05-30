@@ -12,6 +12,7 @@ import androidx.viewbinding.ViewBinding;
 
 import com.yinp.proapp.utils.StatusBarUtil;
 import com.yinp.tools.utils.LoadUtils;
+import com.yinp.tools.utils.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -116,5 +117,9 @@ public abstract class AppBaseFragment<T extends ViewBinding> extends BaseFragmen
      */
     public void hideLoading() {
         LoadUtils.getInstance().close();
+    }
+
+    public void showToast(String msg) {
+        ToastUtil.initToast(mContext, msg);
     }
 }

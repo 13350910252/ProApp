@@ -22,8 +22,24 @@ public class WanManager extends BaseManager {
         addDisposable(BuildRetrofit.getInstance(BuildRetrofit.Wandroid_URL)
                 .getApiRetrofit().getWanBannerList(), baseObserver);
     }
+
+    /**
+     * 获取首页文章列表
+     * @param size
+     * @param baseObserver
+     */
     public void getHomeList(int size,BaseObserver<BaseRetrofitData> baseObserver) {
         addDisposable(BuildRetrofit.getInstance(BuildRetrofit.Wandroid_URL)
                 .getApiRetrofit().getWanHomArticleList(size), baseObserver);
+    }
+
+    /**
+     * 获取置顶文章
+     * @param size
+     * @param baseObserver
+     */
+    public void getStickList(BaseObserver<BaseRetrofitData> baseObserver) {
+        addDisposable(BuildRetrofit.getInstance(BuildRetrofit.Wandroid_URL)
+                .getApiRetrofit().getStickList(), baseObserver);
     }
 }

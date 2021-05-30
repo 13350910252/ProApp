@@ -23,4 +23,7 @@ public interface ApiRetrofit {
     //    https://www.wanandroid.com/article/list/0/json
     @GET("article/list/{size}/json")
     Observable<BaseRetrofitData> getWanHomArticleList(@Path("size") int size);
+
+    @GET("article/top/json")
+    Observable<BaseRetrofitData> getStickList();
 }

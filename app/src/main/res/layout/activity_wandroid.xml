@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/header"
-        layout="@layout/layout_header"
+        layout="@layout/layout_header_img"
         android:visibility="visible" />
 
     <net.lucode.hackware.magicindicator.MagicIndicator

@@ -17,6 +17,7 @@ import com.yinp.proapp.module.wanandroid.fragment.WanHomeFragment;
 import com.yinp.proapp.utils.StatusBarUtil;
 import com.yinp.proapp.view.viewpager2.SimplePagerTitlePictureView;
 import com.yinp.proapp.view.viewpager2.ViewPager2Utils;
+import com.yinp.tools.fragment_dialog.CommonDialogFragment;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -43,7 +44,8 @@ public class WandroidActivity extends AppBaseFragmentActivity<ActivityWandroidBi
     protected void initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this));
         bd.header.headerCenterTitle.setText("玩Android");
-        initClick(this, bd.header.headerBackImg);
+        bd.header.headerEnd.setImageResource(R.mipmap.common_software);
+        initClick(this, bd.header.headerBackImg, bd.header.headerEnd);
         initIndicator();
     }
 
@@ -106,7 +108,9 @@ public class WandroidActivity extends AppBaseFragmentActivity<ActivityWandroidBi
             finish();
         }
     }
-
+    private void setCommonWebDialog(){
+//        CommonDialogFragment.newInstance(this).setLayoutId(R.layout)
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

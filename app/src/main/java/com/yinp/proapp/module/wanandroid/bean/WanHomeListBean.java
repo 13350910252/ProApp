@@ -72,6 +72,7 @@ public class WanHomeListBean {
     private int visible;
     private int zan;
     private List<?> tags;
+    private boolean isStick;//是否置顶
 
     public String getApkLink() {
         return apkLink;
@@ -335,5 +336,13 @@ public class WanHomeListBean {
 
     public void setTags(List<?> tags) {
         this.tags = tags;
+    }
+
+    public boolean isStick() {
+        return isStick;
+    }
+
+    public void setStick(boolean stick) {
+        isStick = stick;
     }
 }

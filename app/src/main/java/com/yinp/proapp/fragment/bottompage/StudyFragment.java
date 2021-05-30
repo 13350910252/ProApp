@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.yinp.proapp.base.fragment.AppBaseFragment;
 import com.yinp.proapp.databinding.FragmentStudyBinding;
+import com.yinp.proapp.module.customview.activity.CustomViewActivity;
 import com.yinp.proapp.module.wanandroid.activity.WandroidActivity;
 
 /**
@@ -21,7 +22,7 @@ public class StudyFragment extends AppBaseFragment<FragmentStudyBinding> {
         if (v == bd.stvOne) {
             goToActivity(WandroidActivity.class);
         } else if (v == bd.stvFour) {
-
+            goToActivity(CustomViewActivity.class);
         }
     }
 }

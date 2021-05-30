@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.IntDef;
 
-
 import com.yinp.tools.R;
 
 import java.lang.annotation.Retention;
@@ -57,7 +56,7 @@ public class ToastUtil extends Toast {
     }
 
     public static void initToast(Context context, CharSequence text) {
-        initToast(context, text);
+        initToast(context, text, LENGTH_SHORT);
     }
 
     public static void initToast(Context context, CharSequence text, @Duration long time) {

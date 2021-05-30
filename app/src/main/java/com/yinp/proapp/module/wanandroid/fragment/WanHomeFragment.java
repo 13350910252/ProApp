@@ -26,7 +26,6 @@ import com.yinp.proapp.module.wanandroid.bean.WanHomeListBean;
 import com.yinp.proapp.utils.JumpWebUtils;
 import com.yinp.proapp.web.retrofit.BaseObserver;
 import com.yinp.proapp.web.retrofit.BaseRetrofitData;
-import com.yinp.tools.utils.ToastUtil;
 import com.youth.banner.indicator.CircleIndicator;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -59,7 +58,7 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
         initBanner();
         initRecycler();
         getBannerList();
-        getListInfo();
+        getStickList();
         refresh();
     }
 
@@ -82,10 +81,23 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
             public void onBindItem(RecyclerView.ViewHolder holder, int position, WanHomeListBean item) {
                 ViewHolder viewHolder = (ViewHolder) holder;
                 viewHolder.binding.tvTitle.setText(item.getTitle());
-                viewHolder.binding.tvAuthor.setText(TextUtils.isEmpty(item.getAuthor()) ? item.getShareUser() : item.getAuthor());
-                viewHolder.binding.tvType.setText(item.getSuperChapterName() + "/" + item.getChapterName());
+                viewHolder.binding.tvAuthor.setText("作者：" + (TextUtils.isEmpty(item.getAuthor()) ? item.getShareUser() : item.getAuthor()));
+                viewHolder.binding.tvType.setText("分类：" + item.getSuperChapterName() + "/" + item.getChapterName());
+                if (item.isStick()) {
+                    viewHolder.binding.tvStick.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.binding.tvStick.setVisibility(View.GONE);
+                }
+                viewHolder.binding.tvSuperChapter.setText(item.getSuperChapterName());
             }
         };
+        commonAdapter.setOnItemClickListener(new ComViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view) {
+                WanHomeListBean item = dataList.get(position);
+                JumpWebUtils.startWebView(getContext(), item.getTitle(), item.getLink());
+            }
+        });
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(RecyclerView.VERTICAL);
         bd.baseRecycle.setLayoutManager(llm);
@@ -108,12 +120,12 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
         //为下来刷新添加事件
         bd.baseRefresh.setOnRefreshListener(refreshlayout -> {
             page = 1;
-            getListInfo();
+            getStickList();
         });
         //为上拉加载添加事件
         bd.baseRefresh.setOnLoadMoreListener(refreshLayout -> {
             page++;
-            getListInfo();
+            getStickList();
         });
     }
 
@@ -140,13 +152,13 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
             @Override
             public void onError(String msg) {
                 hideLoading();
-                ToastUtil.initToast(getContext(), msg);
+                showToast(msg);
             }
 
             @Override
             public void onCodeFail(String msg) {
                 hideLoading();
-                ToastUtil.initToast(getContext(), msg);
+                showToast(msg);
             }
         });
     }
@@ -173,10 +185,11 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
                     return;
                 }
                 if (page == 1) {
-                    dataList.clear();
                     dataList.addAll(arrayList);
+                    bd.baseRefresh.finishRefresh();
                 } else {
                     dataList.addAll(arrayList);
+                    bd.baseRefresh.finishLoadMore();
                 }
                 bd.bottom.noLl.setVisibility(View.GONE);
                 bd.baseRefresh.setVisibility(View.VISIBLE);
@@ -185,12 +198,62 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
 
             @Override
             public void onError(String msg) {
-
+                hideLoading();
+                showToast(msg);
             }
 
             @Override
             public void onCodeFail(String msg) {
+                hideLoading();
+                showToast(msg);
+            }
+        });
+    }
 
+    /**
+     * 获取置顶文章
+     */
+    private void getStickList() {
+        presenter.getStickList(new BaseObserver<BaseRetrofitData>() {
+            @Override
+            public void onSuccess(BaseRetrofitData o) {
+                hideLoading();
+                if (o == null) {
+                    return;
+                }
+                JsonElement datas = o.getData().isJsonNull() ? null : o.getData().getAsJsonArray();
+                if (datas.isJsonNull()) {
+                    return;
+                }
+                Type type = new TypeToken<ArrayList<WanHomeListBean>>() {
+                }.getType();
+                ArrayList<WanHomeListBean> arrayList = new Gson().fromJson(datas, type);
+                if (arrayList == null || arrayList.size() == 0) {
+                    return;
+                }
+                if (page == 1) {
+                    dataList.clear();
+                    dataList.addAll(arrayList);
+                    bd.baseRefresh.finishRefresh();
+                    bd.bottom.noLl.setVisibility(View.GONE);
+                    bd.baseRefresh.setVisibility(View.VISIBLE);
+                    for (int i = 0; i < dataList.size(); i++) {
+                        dataList.get(i).setStick(true);
+                    }
+                }
+                getListInfo();
+            }
+
+            @Override
+            public void onError(String msg) {
+                hideLoading();
+                showToast(msg);
+            }
+
+            @Override
+            public void onCodeFail(String msg) {
+                hideLoading();
+                showToast(msg);
             }
         });
     }

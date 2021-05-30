@@ -18,20 +18,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".module.customview.activity.TestClipCircleActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" />
+        <activity android:name=".module.customview.activity.CustomViewActivity" />
+        <activity
             android:name=".module.wanandroid.activity.WandroidActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" /><!-- 玩Android首页 -->
+            android:screenOrientation="portrait" /> <!-- 玩Android首页 -->
         <activity
             android:name=".activity.AddUndeterminedActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" /><!--添加今日待做任务 -->
+            android:screenOrientation="portrait" /> <!-- 添加今日待做任务 -->
         <activity
             android:name=".web.webview.WebViewActivity"
             android:exported="false"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" /><!-- 统一的webview -->
+            android:screenOrientation="portrait" /> <!-- 统一的webview -->
         <activity
             android:name=".activity.MajorActivity"
             android:exported="false"
