@@ -11,6 +11,7 @@ import androidx.viewbinding.ViewBinding;
 
 import com.yinp.proapp.R;
 import com.yinp.proapp.utils.StatusBarUtil;
+import com.yinp.tools.utils.LoadUtils;
 import com.yinp.tools.utils.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -101,6 +102,28 @@ public abstract class AppBaseFragmentActivity<T extends ViewBinding> extends Bas
         ViewGroup.LayoutParams params = view.getLayoutParams();
         params.height = height;
     }
+
+    /**
+     * 显示加载框
+     */
+    public void showLoading(int message) {
+        LoadUtils.getInstance().builder(mContext, getString(message));
+    }
+
+    /**
+     * 显示加载框
+     */
+    public void showLoading(String message) {
+        LoadUtils.getInstance().builder(mContext, message);
+    }
+
+    /**
+     * 隐藏加载框
+     */
+    public void hideLoading() {
+        LoadUtils.getInstance().close();
+    }
+
     public void showToast(String msg) {
         ToastUtil.initToast(mContext, msg);
     }

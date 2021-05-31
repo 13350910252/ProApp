@@ -25,6 +25,6 @@ public class HomeFragmentManager extends BaseManager {
      * @param baseObserver
      */
     public void getBannerList(WanObserver<WanData> baseObserver) {
-        addDisposable(WanBuildRetrofit.getInstance().getWanApiRetrofit().getBannerList(), baseObserver);
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getBannerList(), baseObserver);
     }
 }

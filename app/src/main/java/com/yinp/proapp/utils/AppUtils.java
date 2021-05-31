@@ -8,6 +8,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+
 public class AppUtils {
     /**
      * 改变状态栏文字颜色为白色和黑色
@@ -42,7 +44,23 @@ public class AppUtils {
         window.setAttributes(lp);
     }
 
-    public static String setText(String value) {
+    public static String getText(String value) {
         return TextUtils.isEmpty(value) ? "" : value;
+    }
+
+    /**
+     * 获取Decode的中文
+     *
+     * @param encodeName
+     * @return
+     */
+    public static String getDecodeName(String encodeName) {
+        String decodeName = "";
+        try {
+            decodeName = java.net.URLDecoder.decode(encodeName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decodeName;
     }
 }

@@ -14,6 +14,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.yinp.proapp.R;
 import com.yinp.proapp.adapter.ComViewHolder;
 import com.yinp.proapp.adapter.CommonAdapter;
 import com.yinp.proapp.base.fragment.PresenterBaseFragment;
@@ -89,6 +90,11 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
                     viewHolder.binding.tvStick.setVisibility(View.GONE);
                 }
                 viewHolder.binding.tvSuperChapter.setText(item.getSuperChapterName());
+                if (item.isCollect()){
+                    viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton_s);
+                }else {
+                    viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton);
+                }
             }
         };
         commonAdapter.setOnItemClickListener(new ComViewHolder.OnItemClickListener() {

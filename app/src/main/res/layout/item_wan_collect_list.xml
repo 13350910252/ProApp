@@ -27,37 +27,6 @@
             android:textColor="@color/_666"
             android:textSize="@dimen/textSize_14sp"
             tools:text="作者：" />
-
-        <TextView
-            android:id="@+id/tv_stick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingBottom="@dimen/_1dp"
-            android:paddingTop="@dimen/_1dp"
-            android:layout_marginStart="@dimen/_4dp"
-            android:paddingStart="@dimen/_3dp"
-            android:paddingEnd="@dimen/_3dp"
-            android:background="@drawable/shape_stick_ff4d4d_stroke_4"
-            android:text="置顶"
-            android:textColor="@color/ff4d4d"
-            android:textSize="@dimen/textSize_12sp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/tv_super_chapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingBottom="@dimen/_1dp"
-            android:paddingTop="@dimen/_1dp"
-            android:layout_marginStart="@dimen/_4dp"
-            android:paddingStart="@dimen/_3dp"
-            android:paddingEnd="@dimen/_3dp"
-            android:background="@drawable/shape_stick_01a6fd_stroke_4"
-            tools:text="父分类"
-            android:textColor="@color/_01a6fd"
-            android:textSize="@dimen/textSize_12sp"
-            android:visibility="visible" />
     </LinearLayout>
 
     <TextView

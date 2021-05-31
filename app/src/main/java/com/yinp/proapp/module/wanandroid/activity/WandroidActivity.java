@@ -13,14 +13,16 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.yinp.proapp.R;
 import com.yinp.proapp.base.activity.PresenterBaseFragmentActivity;
 import com.yinp.proapp.databinding.ActivityWandroidBinding;
 import com.yinp.proapp.module.wanandroid.WanManager;
+import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
 import com.yinp.proapp.module.wanandroid.fragment.WanHomeFragment;
-import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
-import com.yinp.proapp.module.wanandroid.web.retrofit.WanBuildRetrofit;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
 import com.yinp.proapp.utils.StatusBarUtil;
 import com.yinp.proapp.view.viewpager2.SimplePagerTitlePictureView;
 import com.yinp.proapp.view.viewpager2.ViewPager2Utils;
@@ -37,7 +39,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -126,7 +127,16 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
         if (v == bd.header.headerBackImg) {
             finish();
         } else if (v == bd.ivMe) {
-            setLoginDialog();
+            WanLoginBean wanLoginBean = WanLoginBean.getUserInfo(mContext);
+            if (wanLoginBean != null) {
+                if (!TextUtils.isEmpty(wanLoginBean.getUsername())) {
+                    goToActivity(WanMeActivity.class);
+                } else {
+                    setLoginDialog();
+                }
+            } else {
+                setLoginDialog();
+            }
         }
     }
 
@@ -135,6 +145,7 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
     }
 
     private void setLoginDialog() {
+        showLoading("登录中...");
         CommonDialogFragment.newInstance(this).setLayoutId(R.layout.dialog_login).setViewConvertListener(new ViewConvertListener() {
             @Override
             public void convertView(DialogFragmentHolder holder, BaseDialogFragment dialogFragment) {
@@ -156,27 +167,30 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
                         showToast("密码还没有填写");
                         return;
                     }
-                    JSONObject params = new JSONObject();
-                    try {
-                        params.put("username", account);
-                        params.put("password", params);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    presenter.login(WanBuildRetrofit.toRequestBody(params.toString()), new WanObserver<WanData>() {
+                    presenter.login(account, password, new WanObserver<WanData>() {
                         @Override
                         public void onSuccess(WanData o) {
-
+                            hideLoading();
+                            dialogFragment.dismiss();
+                            JsonElement data = o.getData().getAsJsonObject();
+                            if (data.isJsonNull()) {
+                                showToast("没有获取到登录信息，请重试");
+                                return;
+                            }
+                            WanLoginBean.saveUserInfo(new Gson().fromJson(data, WanLoginBean.class), mContext);
+                            goToActivity(WanMeActivity.class);
                         }
 
                         @Override
                         public void onError(String msg) {
-
+                            hideLoading();
+                            showToast(msg);
                         }
 
                         @Override
                         public void onCodeFail(String msg) {
-
+                            hideLoading();
+                            showToast(msg);
                         }
                     });
                 });

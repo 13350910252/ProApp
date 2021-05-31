@@ -4,10 +4,8 @@ import android.content.Context;
 
 import com.yinp.proapp.manger.BaseManager;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanBuildRetrofit;
-import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
-
-import okhttp3.RequestBody;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
 
 public class WanManager extends BaseManager {
     private Context context;
@@ -22,7 +20,7 @@ public class WanManager extends BaseManager {
      * @param baseObserver
      */
     public void getBannerList(WanObserver<WanData> baseObserver) {
-        addDisposable(WanBuildRetrofit.getInstance().getWanApiRetrofit().getBannerList(), baseObserver);
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getBannerList(), baseObserver);
     }
 
     /**
@@ -32,7 +30,7 @@ public class WanManager extends BaseManager {
      * @param baseObserver
      */
     public void getHomeList(int size, WanObserver<WanData> baseObserver) {
-        addDisposable(WanBuildRetrofit.getInstance().getWanApiRetrofit().getHomArticleList(size), baseObserver);
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getHomArticleList(size), baseObserver);
     }
 
     /**
@@ -41,7 +39,7 @@ public class WanManager extends BaseManager {
      * @param baseObserver
      */
     public void getStickList(WanObserver<WanData> baseObserver) {
-        addDisposable(WanBuildRetrofit.getInstance().getWanApiRetrofit().getStickList(), baseObserver);
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getStickList(), baseObserver);
     }
 
     /**
@@ -49,7 +47,15 @@ public class WanManager extends BaseManager {
      *
      * @param baseObserver
      */
-    public void login(RequestBody rb, WanObserver<WanData> baseObserver) {
-        addDisposable(WanBuildRetrofit.getInstance().getWanApiRetrofit().login(rb), baseObserver);
+    public void login(String username, String password, WanObserver<WanData> baseObserver) {
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().login(username, password), baseObserver);
+    }
+    /**
+     * 获取自己积分数量
+     *
+     * @param baseObserver
+     */
+    public void getIntegral(WanObserver<WanData> baseObserver) {
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getIntegral(), baseObserver);
     }
 }

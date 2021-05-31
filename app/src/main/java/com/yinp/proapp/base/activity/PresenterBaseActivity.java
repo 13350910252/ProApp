@@ -17,8 +17,8 @@ public abstract class PresenterBaseActivity<T extends ViewBinding, P extends Bas
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         presenter = createPresenter();
+        super.onCreate(savedInstanceState);
     }
 
     @Override
