@@ -3,21 +3,32 @@ package com.yinp.proapp.module.wanandroid.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.yinp.proapp.R;
-import com.yinp.proapp.base.activity.AppBaseFragmentActivity;
+import com.yinp.proapp.base.activity.PresenterBaseFragmentActivity;
 import com.yinp.proapp.databinding.ActivityWandroidBinding;
+import com.yinp.proapp.module.wanandroid.WanManager;
 import com.yinp.proapp.module.wanandroid.fragment.WanHomeFragment;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanBuildRetrofit;
 import com.yinp.proapp.utils.StatusBarUtil;
 import com.yinp.proapp.view.viewpager2.SimplePagerTitlePictureView;
 import com.yinp.proapp.view.viewpager2.ViewPager2Utils;
+import com.yinp.tools.fragment_dialog.BaseDialogFragment;
 import com.yinp.tools.fragment_dialog.CommonDialogFragment;
+import com.yinp.tools.fragment_dialog.DialogFragmentHolder;
+import com.yinp.tools.fragment_dialog.ViewConvertListener;
+import com.yinp.tools.shap_view.ShapeTextView;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -26,6 +37,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +47,12 @@ import java.util.List;
 /**
  * 玩Android总页面
  */
-public class WandroidActivity extends AppBaseFragmentActivity<ActivityWandroidBinding> {
+public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWandroidBinding, WanManager> {
+
+    @Override
+    protected WanManager createPresenter() {
+        return new WanManager(mContext);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +64,7 @@ public class WandroidActivity extends AppBaseFragmentActivity<ActivityWandroidBi
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(this));
         bd.header.headerCenterTitle.setText("玩Android");
         bd.header.headerEnd.setImageResource(R.mipmap.common_software);
-        initClick(this, bd.header.headerBackImg, bd.header.headerEnd);
+        initClick(this, bd.header.headerBackImg, bd.header.headerEnd, bd.ivMe);
         initIndicator();
     }
 
@@ -106,11 +125,65 @@ public class WandroidActivity extends AppBaseFragmentActivity<ActivityWandroidBi
         super.onClick(v);
         if (v == bd.header.headerBackImg) {
             finish();
+        } else if (v == bd.ivMe) {
+            setLoginDialog();
         }
     }
-    private void setCommonWebDialog(){
+
+    private void setCommonWebDialog() {
 //        CommonDialogFragment.newInstance(this).setLayoutId(R.layout)
     }
+
+    private void setLoginDialog() {
+        CommonDialogFragment.newInstance(this).setLayoutId(R.layout.dialog_login).setViewConvertListener(new ViewConvertListener() {
+            @Override
+            public void convertView(DialogFragmentHolder holder, BaseDialogFragment dialogFragment) {
+                TextView tv_title = holder.getView(R.id.tv_title);
+                tv_title.setText("玩Android登录");
+
+                EditText et_account = holder.getView(R.id.et_account);
+                EditText et_password = holder.getView(R.id.et_password);
+                ShapeTextView stv_login = holder.getView(R.id.stv_login);
+
+                stv_login.setOnClickListener(v -> {
+                    String account = et_account.getText().toString().trim();
+                    String password = et_password.getText().toString().trim();
+                    if (TextUtils.isEmpty(account)) {
+                        showToast("账号还没有填写");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(password)) {
+                        showToast("密码还没有填写");
+                        return;
+                    }
+                    JSONObject params = new JSONObject();
+                    try {
+                        params.put("username", account);
+                        params.put("password", params);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    presenter.login(WanBuildRetrofit.toRequestBody(params.toString()), new WanObserver<WanData>() {
+                        @Override
+                        public void onSuccess(WanData o) {
+
+                        }
+
+                        @Override
+                        public void onError(String msg) {
+
+                        }
+
+                        @Override
+                        public void onCodeFail(String msg) {
+
+                        }
+                    });
+                });
+            }
+        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(BaseDialogFragment.CENTER).setPercentSize(0.8f, 0).show(getSupportFragmentManager());
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

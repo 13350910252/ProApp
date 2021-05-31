@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BaseManager {
 
-    private CompositeDisposable compositeDisposable;
+    protected CompositeDisposable compositeDisposable;
 
     /**
      * 解除绑定

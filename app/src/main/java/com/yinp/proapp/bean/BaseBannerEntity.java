@@ -1,9 +1,7 @@
 package com.yinp.proapp.bean;
 
 
-import com.yinp.proapp.web.retrofit.BaseRetrofitData;
-
-public class BaseBannerEntity extends BaseRetrofitData {
+public class BaseBannerEntity  {
     private String id;
     private String desc;
     private String imagePath;

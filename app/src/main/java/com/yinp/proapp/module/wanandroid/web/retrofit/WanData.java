@@ -1,10 +1,11 @@
-package com.yinp.proapp.web.retrofit;
+package com.yinp.proapp.module.wanandroid.web.retrofit;
 
 import com.google.gson.JsonElement;
+import com.yinp.proapp.web.retrofit.BaseRetrofitData;
 
 import java.io.Serializable;
 
-public class BaseRetrofitData  implements Serializable {
+public class WanData{
     private JsonElement data;
     private int errorCode;
     private String errorMsg;

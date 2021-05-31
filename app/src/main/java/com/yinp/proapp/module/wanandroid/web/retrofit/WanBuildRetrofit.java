@@ -1,6 +1,8 @@
-package com.yinp.proapp.web.retrofit;
+package com.yinp.proapp.module.wanandroid.web.retrofit;
 
 import android.util.Log;
+
+import com.yinp.proapp.web.retrofit.BuildRetrofit;
 
 import java.util.concurrent.TimeUnit;
 
@@ -8,6 +10,7 @@ import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -15,14 +18,14 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class BuildRetrofit {
+public class WanBuildRetrofit extends BuildRetrofit {
     public static final String BASE_URL = "https://www.wanandroid.com";
     public static final String Wandroid_URL = "https://www.wanandroid.com";
 
-    private static BuildRetrofit buildRetrofit;
+    private static WanBuildRetrofit buildRetrofit;
     private Retrofit retrofit;
     private OkHttpClient client;
-    private ApiRetrofit apiRetrofit;
+    private WanApi apiRetrofit;
 
     private String TAG = "------";
 
@@ -49,11 +52,11 @@ public class BuildRetrofit {
                 .build();
     };
 
-    public BuildRetrofit() {
-        this(BASE_URL);
+    public WanBuildRetrofit() {
+        this(Wandroid_URL);
     }
 
-    public BuildRetrofit(String baseUrl) {
+    public WanBuildRetrofit(String baseUrl) {
         client = new OkHttpClient.Builder()
                 //添加log拦截器
                 .addInterceptor(interceptor)
@@ -71,32 +74,36 @@ public class BuildRetrofit {
                 .build();
         Log.d(TAG, "BuildRetrofit: " + baseUrl);
         Log.d(TAG, "----------------------------BuildRetrofit----------------------------------");
-        apiRetrofit = retrofit.create(ApiRetrofit.class);
+        apiRetrofit = retrofit.create(WanApi.class);
     }
 
-    public static BuildRetrofit getInstance(String baseUrl) {
+    public static WanBuildRetrofit getInstance() {
         if (buildRetrofit == null) {
             synchronized (Object.class) {
                 if (buildRetrofit == null) {
-                    buildRetrofit = new BuildRetrofit(baseUrl);
+                    buildRetrofit = new WanBuildRetrofit();
                 }
             }
         }
         return buildRetrofit;
     }
 
-    public static BuildRetrofit getInstance() {
+    public static WanBuildRetrofit getInstance(String baseUrl) {
         if (buildRetrofit == null) {
             synchronized (Object.class) {
                 if (buildRetrofit == null) {
-                    buildRetrofit = new BuildRetrofit();
+                    buildRetrofit = new WanBuildRetrofit(baseUrl);
                 }
             }
         }
         return buildRetrofit;
     }
 
-    public ApiRetrofit getApiRetrofit() {
+    public WanApi getWanApiRetrofit() {
         return apiRetrofit;
+    }
+
+    public static RequestBody toRequestBody(String json) {
+        return RequestBody.create(json, MediaType.parse("application/json"));
     }
 }

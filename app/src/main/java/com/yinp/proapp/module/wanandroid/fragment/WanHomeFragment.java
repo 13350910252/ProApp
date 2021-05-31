@@ -23,9 +23,9 @@ import com.yinp.proapp.databinding.ItemWanHomeListBinding;
 import com.yinp.proapp.module.wanandroid.WanManager;
 import com.yinp.proapp.module.wanandroid.adapter.WanHomeBannerAdapter;
 import com.yinp.proapp.module.wanandroid.bean.WanHomeListBean;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
 import com.yinp.proapp.utils.JumpWebUtils;
-import com.yinp.proapp.web.retrofit.BaseObserver;
-import com.yinp.proapp.web.retrofit.BaseRetrofitData;
 import com.youth.banner.indicator.CircleIndicator;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -104,7 +104,7 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
         bd.baseRecycle.setAdapter(commonAdapter);
     }
 
-    class ViewHolder extends ComViewHolder {
+    static class ViewHolder extends ComViewHolder {
         ItemWanHomeListBinding binding;
 
         public ViewHolder(ItemWanHomeListBinding itemView) {
@@ -131,9 +131,9 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
 
     private void getBannerList() {
         showLoading("加载中");
-        presenter.getBannerList(new BaseObserver<BaseRetrofitData>() {
+        presenter.getBannerList(new WanObserver<WanData>() {
             @Override
-            public void onSuccess(BaseRetrofitData o) {
+            public void onSuccess(WanData o) {
                 hideLoading();
                 if (o == null) {
                     return;
@@ -167,9 +167,9 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
      * 获取首页得数据
      */
     private void getListInfo() {
-        presenter.getHomeList(size * page, new BaseObserver<BaseRetrofitData>() {
+        presenter.getHomeList(size * page, new WanObserver<WanData>() {
             @Override
-            public void onSuccess(BaseRetrofitData o) {
+            public void onSuccess(WanData o) {
                 hideLoading();
                 if (o == null) {
                     return;
@@ -214,9 +214,9 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
      * 获取置顶文章
      */
     private void getStickList() {
-        presenter.getStickList(new BaseObserver<BaseRetrofitData>() {
+        presenter.getStickList(new WanObserver<WanData>() {
             @Override
-            public void onSuccess(BaseRetrofitData o) {
+            public void onSuccess(WanData o) {
                 hideLoading();
                 if (o == null) {
                     return;

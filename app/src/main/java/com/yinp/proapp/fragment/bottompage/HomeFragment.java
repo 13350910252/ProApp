@@ -20,11 +20,11 @@ import com.yinp.proapp.databinding.FragmentHomeBinding;
 import com.yinp.proapp.fragment.LabelFragment;
 import com.yinp.proapp.fragment.TodayUndeterminedFragment;
 import com.yinp.proapp.manger.HomeFragmentManager;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
 import com.yinp.proapp.utils.JumpWebUtils;
 import com.yinp.proapp.view.viewpager2.SimplePagerTitlePictureView;
 import com.yinp.proapp.view.viewpager2.ViewPager2Utils;
-import com.yinp.proapp.web.retrofit.BaseObserver;
-import com.yinp.proapp.web.retrofit.BaseRetrofitData;
 import com.youth.banner.indicator.CircleIndicator;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -125,9 +125,9 @@ public class HomeFragment extends PresenterBaseFragment<FragmentHomeBinding, Hom
 
     private void getBannerList() {
         showLoading("加载中");
-        presenter.getBannerList(new BaseObserver<BaseRetrofitData>() {
+        presenter.getBannerList(new WanObserver<WanData>() {
             @Override
-            public void onSuccess(BaseRetrofitData o) {
+            public void onSuccess(WanData o) {
                 hideLoading();
                 if (o == null) {
                     return;
