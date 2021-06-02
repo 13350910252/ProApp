@@ -81,4 +81,8 @@ dependencies {
      * 圆形image
      */
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    /**
+     * 实现自适应布局
+     */
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 }

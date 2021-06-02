@@ -31,7 +31,7 @@ public class LoadUtils {
 
     public void builder(Context context, String text) {
         if (dialog == null) {
-            synchronized (LoadUtils.class) {
+            synchronized (loadUtils) {
                 if (dialog == null) {
                     // 获取Dialog布局
                     @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
@@ -71,6 +71,7 @@ public class LoadUtils {
     public void close() {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
+            dialog = null;
         }
     }
 

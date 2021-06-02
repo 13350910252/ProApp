@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RankLinearLayout">
+        <!--        背景颜色-->
+        <attr name="bgColor" format="color" />
+        <!--        进度比例-->
+        <attr name="schedule" format="float" />
+        <!--        动画时长-->
+        <attr name="duration" format="integer" />
+        <!--        是否开始动画-->
+        <attr name="isStart" format="boolean" />
+    </declare-styleable>
+</resources>

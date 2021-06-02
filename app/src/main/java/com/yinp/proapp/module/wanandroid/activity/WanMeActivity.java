@@ -46,7 +46,7 @@ public class WanMeActivity extends PresenterBaseFragmentActivity<ActivityWanMeBi
     protected void initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext));
         bd.header.headerCenterTitle.setText("我的");
-        initClick(this, bd.tvNickName, bd.llJoinOpenSource, bd.llOpenSourceWeb, bd.llSetting);
+        initClick(this, bd.tvNickName, bd.llJoinOpenSource, bd.llOpenSourceWeb, bd.llSetting, bd.llIntegralRank);
         bindData();
     }
 
@@ -96,6 +96,8 @@ public class WanMeActivity extends PresenterBaseFragmentActivity<ActivityWanMeBi
             JumpWebUtils.startWebView(mContext,
                     "WanAndroid——WJX",
                     "https://github.com/wangjianxiandev/WanAndroidMvp");
+        } else if (v == bd.llIntegralRank) {
+            goToActivity(WanRankActivity.class);
         }
     }
 

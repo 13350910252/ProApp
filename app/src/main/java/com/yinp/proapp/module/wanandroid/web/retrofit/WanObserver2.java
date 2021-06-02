@@ -11,10 +11,9 @@ import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 
-import io.reactivex.observers.DisposableObserver;
 import retrofit2.HttpException;
 
-public abstract class WanObserver<T> extends BaseObserver<T> {
+public abstract class WanObserver2<T> extends BaseObserver<T> {
     /**
      * 解析数据失败
      */
@@ -35,7 +34,7 @@ public abstract class WanObserver<T> extends BaseObserver<T> {
     @Override
     public void onNext(@NotNull T o) {
         try {
-            WanData model = (WanData) o;
+            WanData2 model = (WanData2) o;
             if (model.getErrorCode() == 0) {
                 onSuccess(o);
             } else {

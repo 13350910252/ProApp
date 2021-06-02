@@ -33,13 +33,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingBottom="@dimen/_1dp"
-            android:paddingTop="@dimen/_1dp"
             android:layout_marginStart="@dimen/_4dp"
-            android:paddingStart="@dimen/_3dp"
-            android:paddingEnd="@dimen/_3dp"
             android:background="@drawable/shape_stick_ff4d4d_stroke_4"
+            android:paddingStart="@dimen/_3dp"
+            android:paddingTop="@dimen/_1dp"
+            android:paddingEnd="@dimen/_3dp"
+            android:paddingBottom="@dimen/_1dp"
             android:text="置顶"
+            android:textColor="@color/ff4d4d"
+            android:textSize="@dimen/textSize_12sp"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_latest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_4dp"
+            android:background="@drawable/shape_stick_ff4d4d_stroke_4"
+            android:paddingStart="@dimen/_3dp"
+            android:paddingTop="@dimen/_1dp"
+            android:paddingEnd="@dimen/_3dp"
+            android:paddingBottom="@dimen/_1dp"
+            android:text="新"
             android:textColor="@color/ff4d4d"
             android:textSize="@dimen/textSize_12sp"
             android:visibility="gone" />
@@ -48,16 +63,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingBottom="@dimen/_1dp"
-            android:paddingTop="@dimen/_1dp"
             android:layout_marginStart="@dimen/_4dp"
-            android:paddingStart="@dimen/_3dp"
-            android:paddingEnd="@dimen/_3dp"
             android:background="@drawable/shape_stick_01a6fd_stroke_4"
-            tools:text="父分类"
+            android:paddingStart="@dimen/_3dp"
+            android:paddingTop="@dimen/_1dp"
+            android:paddingEnd="@dimen/_3dp"
+            android:paddingBottom="@dimen/_1dp"
             android:textColor="@color/_01a6fd"
             android:textSize="@dimen/textSize_12sp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:text="父分类" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10dp"
+            android:textColor="@color/_666"
+            android:textSize="@dimen/textSize_14sp"
+            tools:text="2017" />
     </LinearLayout>
 
     <TextView
@@ -84,6 +113,7 @@
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/_10dp"
             android:textColor="@color/_666"
             android:textSize="@dimen/textSize_14sp"
@@ -96,8 +126,8 @@
 
         <ImageView
             android:id="@+id/iv_collect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_28dp"
+            android:layout_height="@dimen/_28dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/_10dp"
             android:src="@mipmap/collecton" />

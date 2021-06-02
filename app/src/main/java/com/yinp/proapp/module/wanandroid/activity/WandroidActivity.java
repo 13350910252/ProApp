@@ -21,6 +21,7 @@ import com.yinp.proapp.databinding.ActivityWandroidBinding;
 import com.yinp.proapp.module.wanandroid.WanManager;
 import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
 import com.yinp.proapp.module.wanandroid.fragment.WanHomeFragment;
+import com.yinp.proapp.module.wanandroid.fragment.WanSystemFragment;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
 import com.yinp.proapp.utils.StatusBarUtil;
@@ -70,15 +71,13 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
     }
 
     private SparseArray<Fragment> fragments = new SparseArray<>();
-    private WanHomeFragment wanHomeFragment;
 
     private void initIndicator() {
-        wanHomeFragment = WanHomeFragment.getInstance();
         fragments.put(0, WanHomeFragment.getInstance());
         fragments.put(1, WanHomeFragment.getInstance());
         fragments.put(2, WanHomeFragment.getInstance());
         fragments.put(3, WanHomeFragment.getInstance());
-        fragments.put(4, WanHomeFragment.getInstance());
+        fragments.put(4, WanSystemFragment.getInstance());
         fragments.put(5, WanHomeFragment.getInstance());
         fragments.put(6, WanHomeFragment.getInstance());
         fragments.put(7, WanHomeFragment.getInstance());
@@ -145,7 +144,6 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
     }
 
     private void setLoginDialog() {
-        showLoading("登录中...");
         CommonDialogFragment.newInstance(this).setLayoutId(R.layout.dialog_login).setViewConvertListener(new ViewConvertListener() {
             @Override
             public void convertView(DialogFragmentHolder holder, BaseDialogFragment dialogFragment) {
@@ -167,6 +165,7 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
                         showToast("密码还没有填写");
                         return;
                     }
+                    showLoading("登录中...");
                     presenter.login(account, password, new WanObserver<WanData>() {
                         @Override
                         public void onSuccess(WanData o) {

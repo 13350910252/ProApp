@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".module.wanandroid.activity.WanCollectionActivity"></activity>
+        <activity android:name=".module.wanandroid.activity.WanRankActivity"></activity>
+        <activity android:name=".module.wanandroid.activity.WanSysActivity" />
+        <activity android:name=".module.wanandroid.activity.WanCollectionActivity" />
         <activity android:name=".module.wanandroid.activity.WanMeActivity" />
         <activity
             android:name=".module.customview.activity.TestClipCircleActivity"

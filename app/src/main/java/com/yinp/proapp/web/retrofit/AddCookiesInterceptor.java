@@ -1,44 +1,38 @@
 package com.yinp.proapp.web.retrofit;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * @author : jc.lu
+ * @create : 17/07/07.
+ */
 public class AddCookiesInterceptor implements Interceptor {
-    private static final String COOKIE_PREF = "cookies_prefs";
     private Context mContext;
+    private String mName;
 
-    public AddCookiesInterceptor(Context context) {
+    public AddCookiesInterceptor(Context context, String name) {
         mContext = context;
+        mName = name;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
-        Request.Builder builder = request.newBuilder();
-        String cookie = getCookie(request.url().toString(), request.url().host());
-        if (!TextUtils.isEmpty(cookie)) {
-            builder.addHeader("Cookie", cookie);
+        Request.Builder builder = chain.request().newBuilder();
+        HashSet<String> preferences = (HashSet) mContext.getSharedPreferences(mName, mContext.MODE_PRIVATE).getStringSet("cookie", null);
+        if (preferences != null) {
+            for (String cookie : preferences) {
+                builder.addHeader("Cookie", cookie);
+                Log.v("OkHttp", "Adding Header: " + cookie); // This is done so I know which headers are being added; this interceptor is used after the normal logging of OkHttp
+            }
         }
-
         return chain.proceed(builder.build());
-    }
-
-    private String getCookie(String url, String domain) {
-        SharedPreferences sp = mContext.getSharedPreferences(COOKIE_PREF, Context.MODE_PRIVATE);
-        if (!TextUtils.isEmpty(url)&&sp.contains(url)&&!TextUtils.isEmpty(sp.getString(url,""))) {
-            return sp.getString(url, "");
-        }
-        if (!TextUtils.isEmpty(domain)&&sp.contains(domain) && !TextUtils.isEmpty(sp.getString(domain, ""))) {
-            return sp.getString(domain, "");
-        }
-
-        return null;
     }
 }

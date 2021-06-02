@@ -24,14 +24,16 @@ import com.yinp.proapp.databinding.ItemWanHomeListBinding;
 import com.yinp.proapp.module.wanandroid.WanManager;
 import com.yinp.proapp.module.wanandroid.adapter.WanHomeBannerAdapter;
 import com.yinp.proapp.module.wanandroid.bean.WanHomeListBean;
-import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
+import com.yinp.proapp.utils.DateUtils;
 import com.yinp.proapp.utils.JumpWebUtils;
 import com.youth.banner.indicator.CircleIndicator;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,8 +46,7 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
     private List<WanHomeListBean> dataList = new ArrayList<>();
     private CommonAdapter<WanHomeListBean> commonAdapter;
 
-    private int size = 10;
-    private int page = 1;
+    private int page = 0;
 
     public static WanHomeFragment getInstance() {
         WanHomeFragment wanHomeFragment = new WanHomeFragment();
@@ -90,11 +91,30 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
                     viewHolder.binding.tvStick.setVisibility(View.GONE);
                 }
                 viewHolder.binding.tvSuperChapter.setText(item.getSuperChapterName());
-                if (item.isCollect()){
+                if (item.isCollect()) {
                     viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton_s);
-                }else {
+                } else {
                     viewHolder.binding.ivCollect.setImageResource(R.mipmap.collecton);
                 }
+                Date date = DateUtils.toDate(DateUtils.yyyy_MM_dd_HH_mm, item.getNiceDate());
+                if (date == null) {
+                    viewHolder.binding.tvDate.setText(item.getNiceDate());
+                } else {
+                    viewHolder.binding.tvDate.setText(DateUtils.DateAgo.format(date));
+                }
+                if (!TextUtils.isEmpty(viewHolder.binding.tvDate.getText())) {
+                    String value = viewHolder.binding.tvDate.getText().toString().trim();
+                    if (value.contains("小时") || value.contains("刚刚")) {
+                        viewHolder.binding.tvLatest.setVisibility(View.VISIBLE);
+                    } else {
+                        viewHolder.binding.tvLatest.setVisibility(View.GONE);
+                    }
+                } else {
+                    viewHolder.binding.tvLatest.setVisibility(View.GONE);
+                }
+                viewHolder.binding.ivCollect.setOnClickListener(v -> {
+
+                });
             }
         };
         commonAdapter.setOnItemClickListener(new ComViewHolder.OnItemClickListener() {
@@ -173,7 +193,7 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
      * 获取首页得数据
      */
     private void getListInfo() {
-        presenter.getHomeList(size * page, new WanObserver<WanData>() {
+        presenter.getHomeList(page, new WanObserver<WanData>() {
             @Override
             public void onSuccess(WanData o) {
                 hideLoading();
@@ -190,11 +210,10 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
                 if (arrayList == null || arrayList.size() == 0) {
                     return;
                 }
-                if (page == 1) {
-                    dataList.addAll(arrayList);
+                dataList.addAll(arrayList);
+                if (page == 0) {
                     bd.baseRefresh.finishRefresh();
                 } else {
-                    dataList.addAll(arrayList);
                     bd.baseRefresh.finishLoadMore();
                 }
                 bd.bottom.noLl.setVisibility(View.GONE);
@@ -237,7 +256,7 @@ public class WanHomeFragment extends PresenterBaseFragment<FragmentWanHomeBindin
                 if (arrayList == null || arrayList.size() == 0) {
                     return;
                 }
-                if (page == 1) {
+                if (page == 0) {
                     dataList.clear();
                     dataList.addAll(arrayList);
                     bd.baseRefresh.finishRefresh();
