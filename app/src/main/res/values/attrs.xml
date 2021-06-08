@@ -10,4 +10,19 @@
         <!--        是否开始动画-->
         <attr name="isStart" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="TriangleLinearLayout">
+        <attr name="triangle_width" format="integer" />
+        <attr name="triangle_height" format="integer" />
+        <attr name="triangle_color" format="color" />
+
+        <attr name="content_corners" format="integer" />
+        <attr name="content_color" format="integer" />
+
+        <attr name="triangle_position" format="flags">
+            <flag name="top_left" value="1" />
+            <flag name="top_right" value="2" />
+        </attr>
+        <!--        跟着位置来的-->
+        <attr name="distance" format="integer" />
+    </declare-styleable>
 </resources>

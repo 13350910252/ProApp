@@ -20,7 +20,7 @@ public class CustomViewActivity extends AppBaseActivity<ActivityCustomViewBindin
 
     @Override
     protected void initViews() {
-        initClick(this, bd.tvOne, bd.header.headerBackImg);
+        initClick(this, bd.tvOne, bd.header.headerBackImg, bd.tvTwoOne,bd.sllOne );
         bd.header.headerCenterTitle.setText("自定义view");
     }
 
@@ -31,6 +31,8 @@ public class CustomViewActivity extends AppBaseActivity<ActivityCustomViewBindin
             goToActivity(TestClipCircleActivity.class);
         } else if (v == bd.header.headerBackImg) {
             finish();
+        } else if (v == bd.tvTwoOne) {
+            goToActivity(TestTriangleActivity.class);
         }
     }
 }
