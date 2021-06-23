@@ -8,8 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -48,8 +46,20 @@ public class ClipCircleView extends AppCompatImageView {
 
         clipPath = new Path();
 
+    }
 
-        bottomBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture);
+    private boolean isFirst = true;
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (isFirst) {
+            isFirst = false;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.outWidth = getWidth();
+            options.outHeight = getHeight();
+            bottomBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture, options);
+        }
     }
 
     @Override
