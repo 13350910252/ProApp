@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
@@ -55,10 +56,16 @@ public class ClipCircleView extends AppCompatImageView {
         super.onLayout(changed, left, top, right, bottom);
         if (isFirst) {
             isFirst = false;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.outWidth = getWidth();
-            options.outHeight = getHeight();
-            bottomBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture, options);
+            //让图片填充整个屏幕
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture);
+            int bWidth = bitmap.getWidth();
+            int bHeight = bitmap.getHeight();
+
+            float scaleWidth = getWidth() * 1.0f / bWidth;
+            float scaleHeight = getHeight() * 1.0f / bHeight;
+            Matrix matrix = new Matrix();
+            matrix.postScale(scaleWidth, scaleHeight);
+            bottomBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         }
     }
 

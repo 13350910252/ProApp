@@ -17,7 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".module.customview.activity.TestTriangleActivity"></activity>
+        <activity
+            android:name=".module.customview.activity.TestTriangleActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" />
         <activity android:name=".module.wanandroid.activity.WanRankActivity" />
         <activity android:name=".module.wanandroid.activity.WanSysActivity" />
         <activity android:name=".module.wanandroid.activity.WanCollectionActivity" />
