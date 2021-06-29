@@ -6,10 +6,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.yinp.proapp.constant.Constant;
+import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashSet;
+import java.util.List;
+
+import okhttp3.Cookie;
 
 public class AppUtils {
     /**
@@ -64,6 +70,7 @@ public class AppUtils {
         }
         return decodeName;
     }
+
     /**
      * dp转px
      *
@@ -82,5 +89,39 @@ public class AppUtils {
     public static float pxToDp(Context context, float value) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return value / scale + 0.5f;
+    }
+
+    public static boolean isLogin(Context context) {
+        SharedPrefsCookiePersistor sharedPrefsCookiePersistor = new SharedPrefsCookiePersistor(context);
+        List<Cookie> cookies = sharedPrefsCookiePersistor.loadAll();
+        if (cookies != null && cookies.size() > 0) {
+            WanLoginBean wanLoginBean = WanLoginBean.getUserInfo(context);
+            if (wanLoginBean != null) {
+                if (!TextUtils.isEmpty(wanLoginBean.getUsername())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+
+
+    }
+
+    public static String getValue(String value) {
+        return getValue(value, "暂无");
+    }
+
+    public static String getValue(String value, String defaultValue) {
+        if (TextUtils.isEmpty(value)) {
+            return defaultValue;
+        } else {
+            return value;
+        }
     }
 }

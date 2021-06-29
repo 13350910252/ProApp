@@ -3,6 +3,7 @@ package com.yinp.proapp.module.wanandroid;
 import android.content.Context;
 
 import com.yinp.proapp.manger.BaseManager;
+import com.yinp.proapp.module.wanandroid.bean.CollectionListBean;
 import com.yinp.proapp.module.wanandroid.bean.RankListBean;
 import com.yinp.proapp.module.wanandroid.bean.WanSysListBean;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanBuildRetrofit;
@@ -79,5 +80,15 @@ public class WanManager extends BaseManager {
      */
     public void getSystemInfo(WanObserver2<WanData2<List<WanSysListBean>>> baseObserver) {
         addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getSystemList(), baseObserver);
+    }
+
+    /**
+     * 获取收藏文章列表
+     *
+     * @param page
+     * @param baseObserver
+     */
+    public void getCollectedList(int page, WanObserver2<WanData2<CollectionListBean>> baseObserver) {
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getCollectList(page), baseObserver);
     }
 }

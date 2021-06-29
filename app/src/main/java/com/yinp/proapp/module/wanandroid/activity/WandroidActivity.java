@@ -24,6 +24,7 @@ import com.yinp.proapp.module.wanandroid.fragment.WanHomeFragment;
 import com.yinp.proapp.module.wanandroid.fragment.WanSystemFragment;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
+import com.yinp.proapp.utils.AppUtils;
 import com.yinp.proapp.utils.StatusBarUtil;
 import com.yinp.proapp.view.viewpager2.SimplePagerTitlePictureView;
 import com.yinp.proapp.view.viewpager2.ViewPager2Utils;
@@ -39,8 +40,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,21 +125,12 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
         if (v == bd.header.headerBackImg) {
             finish();
         } else if (v == bd.ivMe) {
-            WanLoginBean wanLoginBean = WanLoginBean.getUserInfo(mContext);
-            if (wanLoginBean != null) {
-                if (!TextUtils.isEmpty(wanLoginBean.getUsername())) {
-                    goToActivity(WanMeActivity.class);
-                } else {
-                    setLoginDialog();
-                }
+            if (AppUtils.isLogin(mContext)) {
+                goToActivity(WanMeActivity.class);
             } else {
                 setLoginDialog();
             }
         }
-    }
-
-    private void setCommonWebDialog() {
-//        CommonDialogFragment.newInstance(this).setLayoutId(R.layout)
     }
 
     private void setLoginDialog() {

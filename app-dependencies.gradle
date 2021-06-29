@@ -85,4 +85,16 @@ dependencies {
      * 实现自适应布局
      */
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    /**
+     * 存储
+     */
+    implementation 'com.tencent:mmkv-static:1.2.4'
+    /**
+     * 显示htm
+     */
+    implementation 'org.sufficientlysecure:html-textview:4.0'
+    /**
+     * 数据持久化
+     */
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 }

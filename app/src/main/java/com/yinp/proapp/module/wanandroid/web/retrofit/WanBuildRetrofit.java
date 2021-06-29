@@ -3,10 +3,12 @@ package com.yinp.proapp.module.wanandroid.web.retrofit;
 import android.content.Context;
 import android.util.Log;
 
-import com.yinp.proapp.web.retrofit.AddCookiesInterceptor;
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.yinp.proapp.web.retrofit.BuildRetrofit;
 import com.yinp.proapp.web.retrofit.InterceptorUtil;
-import com.yinp.proapp.web.retrofit.ReceivedCookiesInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -62,12 +64,16 @@ public class WanBuildRetrofit extends BuildRetrofit {
     }
 
     public WanBuildRetrofit(String baseUrl) {
+        ClearableCookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(mContext));
+
         client = new OkHttpClient.Builder()
                 //添加log拦截器
 //                .addInterceptor(interceptor)
                 .addInterceptor(InterceptorUtil.LogInterceptor())
-                .addInterceptor(new AddCookiesInterceptor(mContext, "wanAndroidCookies")) //这部分
-                .addInterceptor(new ReceivedCookiesInterceptor(mContext, "wanAndroidCookies")) //这
+//                .addInterceptor(new AddCookiesInterceptor(mContext, Constant.WanAndroid.COOKIES)) //这部分
+//                .addInterceptor(new ReceivedCookiesInterceptor(mContext, Constant.WanAndroid.COOKIES)) //这
+                .cookieJar(cookieJar)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build();

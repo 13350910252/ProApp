@@ -1,5 +1,6 @@
 package com.yinp.proapp.module.wanandroid.web.retrofit;
 
+import com.yinp.proapp.module.wanandroid.bean.CollectionListBean;
 import com.yinp.proapp.module.wanandroid.bean.RankListBean;
 import com.yinp.proapp.module.wanandroid.bean.WanSysListBean;
 
@@ -70,4 +71,13 @@ public interface WanApi {
      */
     @GET("tree/json")
     Observable<WanData2<List<WanSysListBean>>> getSystemList();
+
+    /**
+     * 获取收藏列表
+     * https://www.wanandroid.com/lg/collect/list/0/json
+     *
+     * @return
+     */
+    @GET("lg/collect/list/{page}/json")
+    Observable<WanData2<CollectionListBean>> getCollectList(@Path("page") int page);
 }
