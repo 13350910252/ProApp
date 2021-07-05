@@ -181,7 +181,7 @@ public class WanMeActivity extends PresenterBaseFragmentActivity<ActivityWanMeBi
                     });
                 });
             }
-        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(BaseDialogFragment.CENTER).setPercentSize(0.8f, 0).show(getSupportFragmentManager());
+        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(R.style.CenterDialogAnimation).setPercentSize(0.8f, 0).show(getSupportFragmentManager());
     }
 
     /**

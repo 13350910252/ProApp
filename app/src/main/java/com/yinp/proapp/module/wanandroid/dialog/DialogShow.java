@@ -103,6 +103,6 @@ public class DialogShow {
                     });
                 });
             }
-        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(BaseDialogFragment.CENTER).setPercentSize(0.8f, 0).show(manager);
+        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(R.style.CenterDialogAnimation).setPercentSize(0.8f, 0).show(manager);
     }
 }

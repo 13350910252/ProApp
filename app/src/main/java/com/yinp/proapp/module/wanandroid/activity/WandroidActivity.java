@@ -20,6 +20,7 @@ import com.yinp.proapp.base.activity.PresenterBaseFragmentActivity;
 import com.yinp.proapp.databinding.ActivityWandroidBinding;
 import com.yinp.proapp.module.wanandroid.WanManager;
 import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
+import com.yinp.proapp.module.wanandroid.dialog.DialogShow;
 import com.yinp.proapp.module.wanandroid.fragment.WanHomeFragment;
 import com.yinp.proapp.module.wanandroid.fragment.WanSystemFragment;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
@@ -128,7 +129,8 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
             if (AppUtils.isLogin(mContext)) {
                 goToActivity(WanMeActivity.class);
             } else {
-                setLoginDialog();
+//                setLoginDialog();
+                DialogShow.setLoginDialog(mContext, presenter, true, WanMeActivity.class, getSupportFragmentManager());
             }
         }
     }
@@ -184,7 +186,7 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
                     });
                 });
             }
-        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(BaseDialogFragment.CENTER).setPercentSize(0.8f, 0).show(getSupportFragmentManager());
+        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(R.style.CenterDialogAnimation).setPercentSize(0.8f, 0).show(getSupportFragmentManager());
     }
 
     @Override

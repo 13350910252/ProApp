@@ -2,6 +2,8 @@ package com.yinp.tools.fragment_dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -102,6 +104,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
         super.onResume();
         Window window = getDialog().getWindow();
         if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//解决弹窗有空的问题
             if (resid != -1) {
                 window.getDecorView().setBackgroundResource(resid);
             } else {
