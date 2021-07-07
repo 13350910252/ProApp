@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.hjq.permissions.XXPermissions;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.mmkv.MMKV;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -64,6 +65,7 @@ public class BaseApplication extends Application {
         initBmob();
         initXXPermissions();
         initBugly();
+        MMKV.initialize(this);
 //        initMIPush();
     }
 

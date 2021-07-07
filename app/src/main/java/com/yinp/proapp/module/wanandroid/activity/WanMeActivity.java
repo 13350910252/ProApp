@@ -16,7 +16,9 @@ import com.yinp.proapp.module.wanandroid.WanManager;
 import com.yinp.proapp.module.wanandroid.bean.IntegralBean;
 import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanData2;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
+import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver2;
 import com.yinp.proapp.utils.AppUtils;
 import com.yinp.proapp.utils.JumpWebUtils;
 import com.yinp.proapp.utils.StatusBarUtil;
@@ -46,7 +48,7 @@ public class WanMeActivity extends PresenterBaseFragmentActivity<ActivityWanMeBi
     protected void initViews() {
         setStatusBarHeight(StatusBarUtil.getStatusBarHeight(mContext));
         bd.header.headerCenterTitle.setText("我的");
-        initClick(this, bd.tvNickName, bd.llJoinOpenSource, bd.llOpenSourceWeb, bd.llSetting, bd.llIntegralRank, bd.llCollect);
+        initClick(this, bd.tvNickName, bd.llJoinOpenSource, bd.llOpenSourceWeb, bd.llSetting, bd.llIntegralRank, bd.llCollect, bd.sllLoginOut);
         bindData();
     }
 
@@ -100,6 +102,8 @@ public class WanMeActivity extends PresenterBaseFragmentActivity<ActivityWanMeBi
             goToActivity(WanRankActivity.class);
         } else if (v == bd.llCollect) {
             goToActivity(WanCollectionActivity.class);
+        } else if (v == bd.sllLoginOut) {
+            loginOutDialog();
         }
     }
 
@@ -182,6 +186,40 @@ public class WanMeActivity extends PresenterBaseFragmentActivity<ActivityWanMeBi
                 });
             }
         }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(R.style.CenterDialogAnimation).setPercentSize(0.8f, 0).show(getSupportFragmentManager());
+    }
+
+    private void loginOutDialog() {
+        CommonDialogFragment.newInstance(this).setLayoutId(R.layout.dialog_tips).setViewConvertListener(new ViewConvertListener() {
+            @Override
+            public void convertView(DialogFragmentHolder holder, BaseDialogFragment dialogFragment) {
+                TextView tv_title = holder.getView(R.id.tv_title);
+                TextView tv_left = holder.getView(R.id.tv_left);
+                TextView tv_right = holder.getView(R.id.tv_right);
+                tv_left.setOnClickListener(v -> {
+                    dialogFragment.dismiss();
+                });
+                tv_right.setOnClickListener(v -> loginOut());
+            }
+        }).setGravity(BaseDialogFragment.CENTER).setAnimStyle(R.style.CenterDialogAnimation).setPercentSize(0.8f, 0).show(getSupportFragmentManager());
+    }
+
+    private void loginOut() {
+        presenter.loginOut(new WanObserver2<WanData2<String>>() {
+            @Override
+            public void onSuccess(WanData2<String> o) {
+                showToast("登出成功");
+            }
+
+            @Override
+            public void onError(String msg) {
+                showToast("登出失败");
+            }
+
+            @Override
+            public void onCodeFail(String msg) {
+                showToast("登出失败");
+            }
+        });
     }
 
     /**

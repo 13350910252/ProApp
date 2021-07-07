@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.yinp.proapp.manger.BaseManager;
 import com.yinp.proapp.module.wanandroid.bean.CollectionListBean;
+import com.yinp.proapp.module.wanandroid.bean.NavigationListBean;
 import com.yinp.proapp.module.wanandroid.bean.RankListBean;
 import com.yinp.proapp.module.wanandroid.bean.WanSysListBean;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanBuildRetrofit;
@@ -90,5 +91,23 @@ public class WanManager extends BaseManager {
      */
     public void getCollectedList(int page, WanObserver2<WanData2<CollectionListBean>> baseObserver) {
         addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getCollectList(page), baseObserver);
+    }
+
+    /**
+     * 退出的登录
+     *
+     * @param baseObserver
+     */
+    public void loginOut(WanObserver2<WanData2<String>> baseObserver) {
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().loginOut(), baseObserver);
+    }
+
+    /**
+     * 获取收藏文章列表
+     *
+     * @param baseObserver
+     */
+    public void getNavigationList(WanObserver2<WanData2<List<NavigationListBean>>> baseObserver) {
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getNavigationList(), baseObserver);
     }
 }

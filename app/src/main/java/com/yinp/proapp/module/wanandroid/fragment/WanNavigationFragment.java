@@ -1,6 +1,7 @@
 package com.yinp.proapp.module.wanandroid.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,44 +16,46 @@ import com.google.android.flexbox.JustifyContent;
 import com.yinp.proapp.adapter.ComViewHolder;
 import com.yinp.proapp.adapter.CommonAdapter;
 import com.yinp.proapp.base.fragment.PresenterBaseFragment;
-import com.yinp.proapp.databinding.FragmentWanSystemBinding;
+import com.yinp.proapp.databinding.FragmentWanNavigationBinding;
 import com.yinp.proapp.databinding.ItemSystemOneBinding;
 import com.yinp.proapp.databinding.ItemSystemTwoBinding;
 import com.yinp.proapp.module.wanandroid.WanManager;
-import com.yinp.proapp.module.wanandroid.activity.WanSysActivity;
-import com.yinp.proapp.module.wanandroid.bean.WanSysListBean;
-import com.yinp.proapp.module.wanandroid.bean.WanSysListBean2;
+import com.yinp.proapp.module.wanandroid.bean.NavigationListBean;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData2;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver2;
+import com.yinp.proapp.utils.JumpWebUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WanSystemFragment extends PresenterBaseFragment<FragmentWanSystemBinding, WanManager> {
-    private CommonAdapter<WanSysListBean2> adapter;
-    private List<WanSysListBean2> dataList = new ArrayList<>();
-
-    public static WanSystemFragment getInstance() {
-        WanSystemFragment wanSystemFragment = new WanSystemFragment();
-        Bundle bundle = new Bundle();
-        wanSystemFragment.setArguments(bundle);
-        return wanSystemFragment;
-    }
+/**
+ * 玩安卓导航也买你
+ */
+public class WanNavigationFragment extends PresenterBaseFragment<FragmentWanNavigationBinding, WanManager> {
+    private CommonAdapter<NavigationBean> adapter;
+    private List<NavigationBean> dataList = new ArrayList<>();
 
     @Override
     protected WanManager createPresenter() {
         return new WanManager(getContext());
     }
 
+    public static WanNavigationFragment getInstance() {
+        WanNavigationFragment wanNavigationFragment = new WanNavigationFragment();
+        Bundle bundle = new Bundle();
+        wanNavigationFragment.setArguments(bundle);
+        return wanNavigationFragment;
+    }
+
     @Override
     protected void initViews(View view) {
         initRecycler();
-        getSystemInfo();
+        getNavigationList();
     }
 
     private void initRecycler() {
         bd.bottom.noLl.setVisibility(View.GONE);
-        adapter = new CommonAdapter<WanSysListBean2>(getContext(), dataList) {
+        adapter = new CommonAdapter<NavigationBean>(getContext(), dataList) {
             @Override
             protected ComViewHolder setComViewHolder(View view, int viewType, ViewGroup parent) {
                 if (viewType == 0) {
@@ -64,7 +67,7 @@ public class WanSystemFragment extends PresenterBaseFragment<FragmentWanSystemBi
 
             @Override
             public int getItemViewType(int position) {
-                if (dataList.get(position).isTitle()) {
+                if (TextUtils.isEmpty(dataList.get(position).title)) {
                     return 0;
                 } else {
                     return 1;
@@ -72,16 +75,15 @@ public class WanSystemFragment extends PresenterBaseFragment<FragmentWanSystemBi
             }
 
             @Override
-            public void onBindItem(RecyclerView.ViewHolder holder, int position, WanSysListBean2 item) {
+            public void onBindItem(RecyclerView.ViewHolder holder, int position, NavigationBean item) {
                 super.onBindItem(holder, position, item);
                 ViewHolder viewHolder = (ViewHolder) holder;
                 if (viewHolder.oneBinding != null) {
-                    viewHolder.oneBinding.tvTitle.setText(item.getName());
+                    viewHolder.oneBinding.tvTitle.setText(item.name);
                 } else {
-                    viewHolder.twoBinding.stvValue.setText(item.getName());
+                    viewHolder.twoBinding.stvValue.setText(item.title);
                     viewHolder.twoBinding.stvValue.setOnClickListener(v -> {
-                        Bundle bundle = new Bundle();
-                        goToActivity(WanSysActivity.class, bundle);
+                        JumpWebUtils.startWebView(getContext(), item.title, item.link);
                     });
                 }
             }
@@ -98,8 +100,8 @@ public class WanSystemFragment extends PresenterBaseFragment<FragmentWanSystemBi
     }
 
     private static class ViewHolder extends ComViewHolder {
-        ItemSystemOneBinding oneBinding = null;
-        ItemSystemTwoBinding twoBinding = null;
+        ItemSystemOneBinding oneBinding;
+        ItemSystemTwoBinding twoBinding;
 
         public ViewHolder(ViewBinding itemView, int position) {
             super(itemView.getRoot());
@@ -113,34 +115,30 @@ public class WanSystemFragment extends PresenterBaseFragment<FragmentWanSystemBi
         }
     }
 
-    private void getSystemInfo() {
+    /**
+     * 获取导航列表
+     */
+    private void getNavigationList() {
         showLoading("加载中...");
-        presenter.getSystemInfo(new WanObserver2<WanData2<List<WanSysListBean>>>() {
+        presenter.getNavigationList(new WanObserver2<WanData2<List<NavigationListBean>>>() {
             @Override
-            public void onSuccess(WanData2<List<WanSysListBean>> o) {
-                hideLoading();
-                if (o.getData() != null || o.getData().size() != 00) {
-                    List<WanSysListBean> listBeans = o.getData();
+            public void onSuccess(WanData2<List<NavigationListBean>> o) {
+                List<NavigationListBean> list = o.getData();
+                if (list != null && list.size() > 0) {
                     dataList.clear();
-                    for (int i = 0; i < listBeans.size(); i++) {
-                        WanSysListBean wanSysListBean = listBeans.get(i);
-                        dataList.add(new WanSysListBean2(wanSysListBean.getCourseId(), wanSysListBean.getId(), wanSysListBean.getName(), wanSysListBean.getOrder()
-                                , wanSysListBean.getParentChapterId(), wanSysListBean.isUserControlSetTop(), wanSysListBean.getVisible(), true));
-                        if (wanSysListBean.getChildren() != null) {
-                            for (int i1 = 0; i1 < wanSysListBean.getChildren().size(); i1++) {
-                                WanSysListBean.ChildrenBean childrenBean = wanSysListBean.getChildren().get(i1);
-                                dataList.add(new WanSysListBean2(childrenBean.getCourseId(), childrenBean.getId(), childrenBean.getName(), childrenBean.getOrder()
-                                        , childrenBean.getParentChapterId(), childrenBean.isUserControlSetTop(), childrenBean.getVisible(), false));
+                    for (int i = 0; i < list.size(); i++) {
+                        NavigationListBean navigationListBean = list.get(i);
+                        dataList.add(new NavigationBean(navigationListBean.getName()));
+                        if (navigationListBean.getArticles() != null && navigationListBean.getArticles().size() > 0) {
+                            for (int i1 = 0; i1 < navigationListBean.getArticles().size(); i1++) {
+                                NavigationListBean.ArticlesBean childrenBean = navigationListBean.getArticles().get(i1);
+                                dataList.add(new NavigationBean(childrenBean.getTitle(), childrenBean.getLink()));
                             }
                         }
                     }
-                    bd.rvList.setVisibility(View.VISIBLE);
-                    bd.bottom.noLl.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
-                } else {
-                    bd.rvList.setVisibility(View.GONE);
-                    bd.bottom.noLl.setVisibility(View.VISIBLE);
                 }
+                hideLoading();
             }
 
             @Override
@@ -155,5 +153,20 @@ public class WanSystemFragment extends PresenterBaseFragment<FragmentWanSystemBi
                 showToast(msg);
             }
         });
+    }
+
+    static class NavigationBean {
+        public String name;
+        public String title;
+        public String link;
+
+        public NavigationBean(String name) {
+            this.name = name;
+        }
+
+        public NavigationBean(String title, String link) {
+            this.title = title;
+            this.link = link;
+        }
     }
 }

@@ -283,5 +283,31 @@
                 android:layout_marginEnd="@dimen/_14dp"
                 android:src="@mipmap/ic_right" />
         </com.yinp.tools.shap_view.ShapeLinearLayout>
+
+        <com.yinp.tools.shap_view.ShapeLinearLayout
+            android:id="@+id/sll_login_out"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_52dp"
+            android:layout_marginTop="@dimen/_40dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:oneBg="@color/fbedeb"
+            app:state="pressed">
+
+            <ImageView
+                android:layout_width="@dimen/_20dp"
+                android:layout_height="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_14dp"
+                android:src="@mipmap/login_out" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10dp"
+                android:text="退出登录"
+                android:textColor="@color/_333"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </com.yinp.tools.shap_view.ShapeLinearLayout>
     </com.yinp.tools.shap_view.ShapeLinearLayout>
 </LinearLayout>
