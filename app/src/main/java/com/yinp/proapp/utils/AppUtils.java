@@ -1,6 +1,9 @@
 package com.yinp.proapp.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,8 +15,11 @@ import com.yinp.proapp.constant.Constant;
 import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
 
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Cookie;
 
@@ -123,5 +129,32 @@ public class AppUtils {
         } else {
             return value;
         }
+    }
+
+    /**
+     * 查看sha1值
+     */
+    public static String sHA1(Context context) {
+        try {
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo info = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), PackageManager.GET_SIGNATURES);
+            byte[] cert = info.signatures[0].toByteArray();
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            byte[] publicKey = md.digest(cert);
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : publicKey) {
+                String appendString = Integer.toHexString(0xFF & b)
+                        .toUpperCase(Locale.US);
+                if (appendString.length() == 1)
+                    hexString.append("0");
+                hexString.append(appendString);
+                hexString.append(":");
+            }
+            String result = hexString.toString();
+            return result.substring(0, result.length() - 1);
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

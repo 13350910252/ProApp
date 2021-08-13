@@ -23,6 +23,7 @@ import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
 import com.yinp.proapp.module.wanandroid.dialog.DialogShow;
 import com.yinp.proapp.module.wanandroid.fragment.WanHomeFragment;
 import com.yinp.proapp.module.wanandroid.fragment.WanNavigationFragment;
+import com.yinp.proapp.module.wanandroid.fragment.WanSquareFragment;
 import com.yinp.proapp.module.wanandroid.fragment.WanSystemFragment;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanObserver;
@@ -75,7 +76,7 @@ public class WandroidActivity extends PresenterBaseFragmentActivity<ActivityWand
 
     private void initIndicator() {
         fragments.put(0, WanHomeFragment.getInstance());
-        fragments.put(1, WanHomeFragment.getInstance());
+        fragments.put(1, WanSquareFragment.getInstance());
         fragments.put(2, WanNavigationFragment.getInstance());
         fragments.put(3, WanHomeFragment.getInstance());
         fragments.put(4, WanSystemFragment.getInstance());

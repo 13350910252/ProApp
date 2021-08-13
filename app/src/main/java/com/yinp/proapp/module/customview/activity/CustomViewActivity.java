@@ -28,6 +28,9 @@ public class CustomViewActivity extends AppBaseActivity<ActivityCustomViewBindin
     private List<CustomViewBean> listOther = new ArrayList<>();
     private CommonAdapter<CustomViewBean> adapterOther;
 
+    private List<CustomViewBean> listMe = new ArrayList<>();
+    private CommonAdapter<CustomViewBean> adapterMe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +39,23 @@ public class CustomViewActivity extends AppBaseActivity<ActivityCustomViewBindin
 
     @Override
     protected void initViews() {
-        initClick(this, bd.header.headerBackImg, bd.tvTwoOne);
+        initClick(this, bd.header.headerBackImg);
         bd.header.headerCenterTitle.setText("自定义view");
         initRecycler();
     }
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        if (v == bd.header.headerBackImg) {
+            finish();
+        }
+    }
+
     private void initRecycler() {
+        /**
+         * 复制加更改的
+         */
         listOther.add(new CustomViewBean("点击屏幕显示点击范围的图片，可以滑动，显示范围随着滑动改变", "com.yinp.proapp.module.customview.activity.TestClipCircleActivity"));
         adapterOther = new CommonAdapter<CustomViewBean>(this, listOther) {
             @Override
@@ -55,22 +69,53 @@ public class CustomViewActivity extends AppBaseActivity<ActivityCustomViewBindin
                 viewHolder.binding.tvTitle.setText(item.getTitle());
             }
         };
-        adapterOther.setOnItemClickListener(new ComViewHolder.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view) {
-                CustomViewBean bean = listOther.get(position);
-                Intent intent = new Intent();
-                intent.setClassName(mContext, bean.getUrl());
-                startActivity(intent);
-            }
+        adapterOther.setOnItemClickListener((position, view) -> {
+            CustomViewBean bean = listOther.get(position);
+            Intent intent = new Intent();
+            intent.setClassName(mContext, bean.getUrl());
+            startActivity(intent);
         });
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(RecyclerView.VERTICAL);
+        LinearLayoutManager llm = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         bd.rvOther.setLayoutManager(llm);
         bd.rvOther.setAdapter(adapterOther);
+        /**
+         * 自己做的自定义view
+         */
+        listMe.add(new CustomViewBean("带三角形的圆角布局","com.yinp.proapp.module.customview.activity.TestTriangleActivity"));
+        adapterMe = new CommonAdapter<CustomViewBean>(this, listMe) {
+            @Override
+            protected ComViewHolder setComViewHolder(View view, int viewType, ViewGroup parent) {
+                return new MeViewHolder(ItemCustomViewListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+            }
+
+            @Override
+            public void onBindItem(RecyclerView.ViewHolder holder, int position, CustomViewBean item) {
+                OtherViewHolder viewHolder = (OtherViewHolder) holder;
+                viewHolder.binding.tvTitle.setText(item.getTitle());
+            }
+        };
+        adapterMe.setOnItemClickListener((position, view) -> {
+            CustomViewBean bean = listMe.get(position);
+            Intent intent = new Intent();
+            intent.setClassName(mContext, bean.getUrl());
+            startActivity(intent);
+        });
+        LinearLayoutManager llm2 = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        bd.rvMe.setLayoutManager(llm2);
+        bd.rvMe.setAdapter(adapterMe);
     }
 
-    class OtherViewHolder extends ComViewHolder {
+    static class OtherViewHolder extends ComViewHolder {
         ItemCustomViewListBinding binding;
 
         public OtherViewHolder(ItemCustomViewListBinding itemView) {
@@ -79,13 +124,12 @@ public class CustomViewActivity extends AppBaseActivity<ActivityCustomViewBindin
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        if (v == bd.header.headerBackImg) {
-            finish();
-        } else if (v == bd.tvTwoOne) {
-            goToActivity(TestTriangleActivity.class);
+    static class MeViewHolder extends ComViewHolder {
+        ItemCustomViewListBinding binding;
+
+        public MeViewHolder(ItemCustomViewListBinding itemView) {
+            super(itemView.getRoot());
+            binding = itemView;
         }
     }
 }

@@ -3,6 +3,7 @@ package com.yinp.proapp.module.wanandroid.web.retrofit;
 import com.yinp.proapp.module.wanandroid.bean.CollectionListBean;
 import com.yinp.proapp.module.wanandroid.bean.NavigationListBean;
 import com.yinp.proapp.module.wanandroid.bean.RankListBean;
+import com.yinp.proapp.module.wanandroid.bean.WanSquareListBean;
 import com.yinp.proapp.module.wanandroid.bean.WanSysListBean;
 
 import java.util.List;
@@ -90,6 +91,16 @@ public interface WanApi {
      */
     @GET("navi/json")
     Observable<WanData2<List<NavigationListBean>>> getNavigationList();
+
+
+    /**
+     * 获取广场列表数据
+     * https://wanandroid.com/user_article/list/页码/json
+     *
+     * @return
+     */
+    @GET("user_article/list/{page}/json")
+    Observable<WanData2<WanSquareListBean>> getSquareList(@Path("page") int page);
 
     /**
      * 获取收藏列表

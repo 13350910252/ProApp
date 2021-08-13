@@ -16,7 +16,7 @@ import com.yinp.proapp.R;
 public abstract class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener {
     public Activity mActivity;
     public Context mContext;
-    public String TAG = "yinp";
+    public String TAG = "yinp_Content";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

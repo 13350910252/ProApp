@@ -6,6 +6,7 @@ import com.yinp.proapp.manger.BaseManager;
 import com.yinp.proapp.module.wanandroid.bean.CollectionListBean;
 import com.yinp.proapp.module.wanandroid.bean.NavigationListBean;
 import com.yinp.proapp.module.wanandroid.bean.RankListBean;
+import com.yinp.proapp.module.wanandroid.bean.WanSquareListBean;
 import com.yinp.proapp.module.wanandroid.bean.WanSysListBean;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanBuildRetrofit;
 import com.yinp.proapp.module.wanandroid.web.retrofit.WanData;
@@ -109,5 +110,13 @@ public class WanManager extends BaseManager {
      */
     public void getNavigationList(WanObserver2<WanData2<List<NavigationListBean>>> baseObserver) {
         addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getNavigationList(), baseObserver);
+    }
+    /**
+     * 获取广场列表数据
+     *
+     * @param baseObserver
+     */
+    public void getSquareList(int page,WanObserver2<WanData2<WanSquareListBean>> baseObserver) {
+        addDisposable(WanBuildRetrofit.getInstance(context).getWanApiRetrofit().getSquareList(page), baseObserver);
     }
 }

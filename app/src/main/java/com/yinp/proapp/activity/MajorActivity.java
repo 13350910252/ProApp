@@ -1,6 +1,7 @@
 package com.yinp.proapp.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -19,6 +20,7 @@ import com.yinp.proapp.fragment.bottompage.MeFragment;
 import com.yinp.proapp.fragment.bottompage.RecreationFragment;
 import com.yinp.proapp.fragment.bottompage.StudyFragment;
 import com.yinp.proapp.fragment.bottompage.ToolsFragment;
+import com.yinp.proapp.utils.AppUtils;
 import com.yinp.proapp.utils.StatusBarUtil;
 
 /**

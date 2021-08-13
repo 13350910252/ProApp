@@ -52,6 +52,7 @@ public class WanBuildRetrofit extends BuildRetrofit {
         Log.d(TAG, "| " + request.toString() + request.headers().toString());
         Log.d(TAG, "| Response:" + content);
         Log.d(TAG, "----------Request End:" + duration + "毫秒----------");
+
         return response.newBuilder()
 //                    .addHeader()
 //                    .removeHeader()
