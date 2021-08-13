@@ -55,6 +55,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation files('libs/BaiduMapSDK_BikeNavi_res.aar')
+    implementation files('libs/BaiduLBS_aar_android_V1.6.7_335550528.aar')
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.13.2'

@@ -11,13 +11,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.yinp.proapp.constant.Constant;
 import com.yinp.proapp.module.wanandroid.bean.WanLoginBean;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -87,6 +85,11 @@ public class AppUtils {
         return scale * value + 0.5f;
     }
 
+    public static int dpToPx(Context context, int value) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (scale * value + 0.5f);
+    }
+
     /**
      * px转dp
      *
@@ -114,7 +117,6 @@ public class AppUtils {
         } else {
             return false;
         }
-
 
 
     }

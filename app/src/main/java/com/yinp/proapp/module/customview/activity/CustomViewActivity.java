@@ -86,7 +86,7 @@ public class CustomViewActivity extends AppBaseActivity<ActivityCustomViewBindin
         /**
          * 自己做的自定义view
          */
-        listMe.add(new CustomViewBean("带三角形的圆角布局","com.yinp.proapp.module.customview.activity.TestTriangleActivity"));
+        listMe.add(new CustomViewBean("带三角形的圆角布局", "com.yinp.proapp.module.customview.activity.TestTriangleActivity"));
         adapterMe = new CommonAdapter<CustomViewBean>(this, listMe) {
             @Override
             protected ComViewHolder setComViewHolder(View view, int viewType, ViewGroup parent) {
