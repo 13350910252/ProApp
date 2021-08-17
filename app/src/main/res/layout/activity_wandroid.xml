@@ -14,7 +14,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/material_indicator"
             android:layout_width="match_parent"
